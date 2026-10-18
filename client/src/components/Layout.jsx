@@ -1,13 +1,27 @@
-import { useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import config from '../config.js';
 import { useCart } from '../CartContext.jsx';
-import { whatsappLink } from '../utils.js';
+import WhatsAppButton from './WhatsAppButton.jsx';
 
 export default function Layout() {
   const { count } = useCart();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const close = () => setMenuOpen(false);
+
+  // Close the mobile menu whenever the page changes, or on Escape
+  useEffect(close, [location.key]);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => e.key === 'Escape' && close();
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  // Highlight a category link only when that category is showing
+  const params = new URLSearchParams(location.search);
+  const activeCat = location.pathname === '/shop' ? params.get('category') : null;
 
   return (
     <>
@@ -17,29 +31,37 @@ export default function Layout() {
 
       <header className="site-header">
         <div className="container header-inner">
-          <button className="menu-btn" aria-label="Menu" onClick={() => setMenuOpen((o) => !o)}>
-            ☰
+          <button
+            className="menu-btn"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            {menuOpen ? '✕' : '☰'}
           </button>
-          <Link to="/" className="logo" onClick={close}>
+          <Link to="/" className="logo">
             <span className="logo-mark">ர</span>
             <span>
               Rajakili <em>Boutique</em>
             </span>
           </Link>
           <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-            <NavLink to="/" end onClick={close}>Home</NavLink>
-            <NavLink to="/shop" onClick={close}>Shop</NavLink>
+            <NavLink to="/" end>Home</NavLink>
+            <NavLink to="/shop" end className={() => (location.pathname === '/shop' && !activeCat ? 'active' : '')}>
+              Shop all
+            </NavLink>
             {config.categories.map((c) => (
-              <NavLink key={c} to={`/shop?category=${c}`} onClick={close} className="nav-cat">
+              <Link key={c} to={`/shop?category=${c}`} className={`nav-cat ${activeCat === c ? 'active' : ''}`}>
                 {c}
-              </NavLink>
+              </Link>
             ))}
           </nav>
-          <Link to="/cart" className="cart-link" onClick={close} aria-label="Cart">
+          <Link to="/cart" className="cart-link" aria-label={`Bag, ${count} items`}>
             Bag <span className="cart-count">{count}</span>
           </Link>
         </div>
       </header>
+      {menuOpen && <div className="menu-backdrop" onClick={close} />}
 
       <main>
         <Outlet />
@@ -61,8 +83,12 @@ export default function Layout() {
           </div>
           <div>
             <h4>Contact</h4>
-            <a href={whatsappLink(`Hi ${config.shopName}!`)} target="_blank" rel="noreferrer">WhatsApp</a>
-            <a href={config.instagram} target="_blank" rel="noreferrer">Instagram</a>
+            <WhatsAppButton className="footer-link" message={`Hi ${config.shopName}! I have a question.`}>
+              WhatsApp
+            </WhatsAppButton>
+            {config.instagram && (
+              <a href={config.instagram} target="_blank" rel="noreferrer">Instagram</a>
+            )}
             <Link to="/admin">Owner login</Link>
           </div>
         </div>

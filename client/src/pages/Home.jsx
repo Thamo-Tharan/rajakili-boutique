@@ -39,11 +39,12 @@ export default function Home() {
               <Link to="/shop?category=Sarees" className="btn btn-ghost">View sarees</Link>
             </div>
           </div>
-          <div className="hero-art" aria-hidden="true">
+          <Link to="/shop?category=Sarees" className="hero-art" aria-label="Shop silk sarees">
             <div className="hero-frame">
               <ProductImage product={{ _id: 'hero', name: 'Silk saree', category: 'Sarees', colors: ['Maroon', 'Gold'] }} />
+              <span className="hero-tag">Silk sarees →</span>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 

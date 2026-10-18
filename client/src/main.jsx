@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext.jsx';
 import Layout from './components/Layout.jsx';
+import ScrollManager from './components/ScrollManager.jsx';
 import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import ProductPage from './pages/ProductPage.jsx';
@@ -11,17 +12,16 @@ import AdminLogin from './pages/AdminLogin.jsx';
 import AdminProducts from './pages/AdminProducts.jsx';
 import './styles.css';
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
-  return null;
+// Make the first page address consistent (#/) so the Back button behaves normally
+if (!window.location.hash) {
+  window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#/`);
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HashRouter>
       <CartProvider>
-        <ScrollToTop />
+        <ScrollManager />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />

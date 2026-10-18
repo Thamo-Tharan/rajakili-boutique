@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import config from '../config.js';
 import {
   deleteProduct, getProducts, getToken, isDemoMode, logout, resetDemoData, saveProduct,
@@ -37,11 +37,22 @@ export default function AdminProducts() {
   const [form, setForm] = useState(null);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState('');
+  const formRef = useRef(null);
 
   const load = () => getProducts().then(setProducts).catch((e) => setError(e.message));
   useEffect(() => {
     load();
   }, []);
+
+  // When the form opens (Add or Edit), bring it into view and focus the first field
+  const formId = form ? form._id || 'new' : null;
+  useEffect(() => {
+    if (formId && formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      formRef.current.querySelector('input')?.focus({ preventScroll: true });
+    }
+  }, [formId]);
 
   if (!getToken()) return <Navigate to="/admin" replace />;
 
@@ -54,12 +65,15 @@ export default function AdminProducts() {
     setError('');
     try {
       await saveProduct(fromForm(form));
+      setSaved(form._id ? `Saved changes to "${form.name}"` : `Added "${form.name}"`);
+      setTimeout(() => setSaved(''), 3000);
       setForm(null);
       await load();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       if (/login|session/i.test(err.message)) {
         logout();
-        navigate('/admin');
+        navigate('/admin', { replace: true });
       }
       setError(err.message);
     } finally {
@@ -68,7 +82,7 @@ export default function AdminProducts() {
   };
 
   const remove = async (p) => {
-    if (!window.confirm(`Delete "${p.name}"?`)) return;
+    if (!window.confirm(`Delete "${p.name}"? This cannot be undone.`)) return;
     try {
       await deleteProduct(p._id);
       await load();
@@ -92,7 +106,8 @@ export default function AdminProducts() {
               Reset demo data
             </button>
           )}
-          <button className="btn btn-link" onClick={() => { logout(); navigate('/admin'); }}>Log out</button>
+          <Link to="/shop" className="btn btn-link">View shop</Link>
+          <button className="btn btn-link" onClick={() => { logout(); navigate('/admin', { replace: true }); }}>Log out</button>
         </div>
       </div>
 
@@ -104,9 +119,10 @@ export default function AdminProducts() {
       </div>
 
       {error && <p className="error">{error}</p>}
+      {saved && <p className="success" role="status">✓ {saved}</p>}
 
       {form && (
-        <form className="card form product-form" onSubmit={submit}>
+        <form ref={formRef} className="card form product-form" onSubmit={submit}>
           <h2>{form._id ? 'Edit product' : 'New product'}</h2>
           <div className="form-grid">
             <label className="span-2">Name<input value={form.name} onChange={update('name')} required /></label>

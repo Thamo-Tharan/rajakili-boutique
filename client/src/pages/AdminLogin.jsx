@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import config from '../config.js';
-import { isDemoMode, login } from '../api.js';
+import { getToken, isDemoMode, login } from '../api.js';
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -10,13 +10,16 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
+  // Already logged in: go straight to the products page
+  if (getToken()) return <Navigate to="/admin/products" replace />;
+
   const submit = async (e) => {
     e.preventDefault();
     setBusy(true);
     setError('');
     try {
       await login(email, password);
-      navigate('/admin/products');
+      navigate('/admin/products', { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {
