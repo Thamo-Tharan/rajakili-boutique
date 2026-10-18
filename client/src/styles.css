@@ -48,7 +48,7 @@ h4 { margin: 0; }
 :focus-visible { outline: 3px solid var(--mustard); outline-offset: 2px; border-radius: 6px; }
 
 .container { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 20px; }
-.section { padding: 64px 0; }
+.section { padding-top: 64px; padding-bottom: 64px; }
 .narrow { max-width: 460px; }
 .muted { color: var(--muted); }
 .small { font-size: 13px; }
@@ -532,7 +532,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
   .span-2 { grid-column: auto; }
   .modal-backdrop { align-items: end; padding: 0; }
   .modal { border-radius: var(--r-lg) var(--r-lg) 0 0; max-width: none; }
-  .section { padding: 44px 0; }
+  .section { padding-top: 44px; padding-bottom: 44px; }
 }
 @media (max-width: 520px) {
   .container { padding: 0 16px; }
