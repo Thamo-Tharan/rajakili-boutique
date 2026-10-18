@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, MessageCircle, RefreshCw, Search, ShoppingBag, Truck, X } from 'lucide-react';
+import { Info, Menu, MessageCircle, RefreshCw, Search, ShoppingBag, Truck, X } from 'lucide-react';
 import config from '../config.js';
 import { useCart } from '../CartContext.jsx';
 import WhatsAppButton from './WhatsAppButton.jsx';
@@ -72,7 +72,7 @@ export default function Layout() {
     <>
       <div className="announce">
         <div className="container announce-inner">
-          <span className="announce-demo">Demo store by <strong>Thamu</strong>. No real orders.</span>
+          <span className="announce-demo"><Info size={14} aria-hidden="true" /> Demo store by <strong>Thamu</strong> · No real orders</span>
           <ul className="announce-notes">
             {NOTES.map(({ icon: Icon, text }) => (
               <li key={text}><Icon size={14} aria-hidden="true" /> {text}</li>

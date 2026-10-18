@@ -97,7 +97,13 @@ h4 { margin: 0; }
 /* ============ Announcement + header ============ */
 .announce { background: var(--navy-deep); color: #d9deea; font-size: 13px; }
 .announce-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 38px; }
-.announce-demo strong { color: var(--mustard); }
+.announce-demo {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #d92d3c; color: #fff; font-weight: 600;
+  padding: 4px 12px; border-radius: 999px; line-height: 1.3;
+}
+.announce-demo strong { color: #fff; font-weight: 800; }
+.announce-inner { padding-top: 5px; padding-bottom: 5px; }
 .announce-notes { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; }
 .announce-notes li { display: flex; align-items: center; gap: 7px; }
 .announce-notes svg { color: var(--mustard); }

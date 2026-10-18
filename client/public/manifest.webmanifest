@@ -1,0 +1,9 @@
+{
+  "name": "Rajakili Boutique (Demo)",
+  "short_name": "Rajakili",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }],
+  "theme_color": "#1b2440",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}
