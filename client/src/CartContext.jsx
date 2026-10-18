@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { getProducts } from './api.js';
 
 const CartContext = createContext(null);
 const KEY = 'rajakili-cart-v2';
@@ -24,6 +25,25 @@ export function CartProvider({ children }) {
       /* storage blocked: cart still works for this visit */
     }
   }, [items]);
+
+  // Keep saved bag items in sync with the current catalogue (names, prices, photos)
+  useEffect(() => {
+    getProducts()
+      .then((list) => {
+        const byId = new Map(list.map((p) => [p._id, p]));
+        setItems((prev) =>
+          prev
+            .filter((i) => byId.has(i.id))
+            .map((i) => {
+              const p = byId.get(i.id);
+              return { ...i, name: p.name, price: p.price, image: p.image, colors: p.colors, category: p.category };
+            })
+        );
+      })
+      .catch(() => {
+        /* keep the saved bag if products can't load */
+      });
+  }, []);
 
   const keyOf = (id, size) => `${id}__${size || ''}`;
 
@@ -58,11 +78,19 @@ export function CartProvider({ children }) {
     );
 
   const clear = () => setItems([]);
+  // Put a removed item back (Undo)
+  const restoreItem = (item, index = Infinity) =>
+    setItems((prev) => {
+      if (prev.some((i) => i.key === item.key)) return prev;
+      const next = [...prev];
+      next.splice(Math.min(index, next.length), 0, item);
+      return next;
+    });
   const count = items.reduce((s, i) => s + i.qty, 0);
   const total = items.reduce((s, i) => s + i.qty * i.price, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQty, clear, count, total, lastAdded, dismissAdded: () => setLastAdded(null) }}>
+    <CartContext.Provider value={{ items, addItem, updateQty, clear, restoreItem, count, total, lastAdded, dismissAdded: () => setLastAdded(null) }}>
       {children}
     </CartContext.Provider>
   );

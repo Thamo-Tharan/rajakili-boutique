@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Check, X } from 'lucide-react';
 import { useCart } from '../CartContext.jsx';
 import ProductImage from './ProductImage.jsx';
@@ -7,6 +7,7 @@ import ProductImage from './ProductImage.jsx';
 // Small pop-up after adding to the bag, with a quick way to view it.
 export default function AddedToast() {
   const { lastAdded, dismissAdded, count } = useCart();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (!lastAdded) return undefined;
@@ -14,7 +15,8 @@ export default function AddedToast() {
     return () => clearTimeout(t);
   }, [lastAdded]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!lastAdded) return null;
+  // Not needed on the bag page itself
+  if (!lastAdded || pathname === '/cart') return null;
 
   return (
     <div className="toast" role="status" key={lastAdded.at}>
