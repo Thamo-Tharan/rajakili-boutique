@@ -137,7 +137,6 @@ export default function Layout() {
       </main>
 
       <footer className="site-footer">
-        <div className="footer-word" aria-hidden="true">ராஜகிளி</div>
         <div className="container footer-inner">
           <div className="footer-brand">
             <Logo light />

@@ -421,7 +421,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
 }
 .modal h2 { font-size: 28px; margin: 0 0 6px; padding-right: 36px; color: var(--navy); }
 .modal p { font-size: 15px; margin: 0 0 16px; }
-.modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--ivory); }
+.modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--ivory); display: grid; place-items: center; }
 .wa-bubble {
   background: #dcf8c6; color: #16301f; border-radius: 14px 14px 14px 3px; padding: 14px 16px;
   white-space: pre-wrap; font-size: 15px; line-height: 1.5;
@@ -466,7 +466,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
   color: transparent; -webkit-text-stroke: 1.2px rgba(224, 165, 38, .55);
   text-align: center; white-space: nowrap; margin-top: 28px; user-select: none;
 }
-.footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-top: 28px; padding-bottom: 36px; }
+.footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-top: 56px; padding-bottom: 40px; }
 .footer-brand p { max-width: 26em; margin: 16px 0 22px; }
 .footer-inner h4 { color: #fff; font-size: 16px; font-weight: 700; margin: 6px 0 14px; }
 .footer-inner > div > a, .footer-link { display: block; padding: 4px 0; font-size: 15px; color: #c3cad9; }

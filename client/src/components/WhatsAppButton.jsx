@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Check, Copy, X } from 'lucide-react';
 import config from '../config.js';
 import { whatsappLink } from '../utils.js';
 
@@ -8,9 +10,11 @@ import { whatsappLink } from '../utils.js';
 export default function WhatsAppButton({ message, className = '', disabled = false, onBeforeOpen, children }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const gotItRef = useRef(null);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
+    gotItRef.current?.focus();
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
     document.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
@@ -60,7 +64,8 @@ export default function WhatsAppButton({ message, className = '', disabled = fal
       >
         {children}
       </button>
-      {open && (
+      {/* Rendered at the top level of the page so nothing (sticky boxes, footer) can cover it */}
+      {open && createPortal(
         <div className="modal-backdrop" onClick={() => setOpen(false)}>
           <div
             className="modal"
@@ -69,7 +74,7 @@ export default function WhatsAppButton({ message, className = '', disabled = fal
             aria-labelledby="wa-title"
             onClick={(e) => e.stopPropagation()}
           >
-            <button className="modal-close" onClick={() => setOpen(false)} aria-label="Close">✕</button>
+            <button className="modal-close" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button>
             <h2 id="wa-title">WhatsApp order preview</h2>
             <p className="muted">
               This is a demo store, so no message is sent. In a real shop, this button opens WhatsApp chat
@@ -77,11 +82,14 @@ export default function WhatsAppButton({ message, className = '', disabled = fal
             </p>
             <div className="wa-bubble">{message}</div>
             <div className="modal-actions">
-              <button className="btn btn-primary" onClick={() => setOpen(false)}>Got it</button>
-              <button className="btn btn-ghost" onClick={copy}>{copied ? 'Copied ✓' : 'Copy message'}</button>
+              <button ref={gotItRef} className="btn btn-primary" onClick={() => setOpen(false)}>Got it</button>
+              <button className="btn btn-ghost" onClick={copy}>
+                {copied ? <><Check size={17} /> Copied</> : <><Copy size={17} /> Copy message</>}
+              </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
