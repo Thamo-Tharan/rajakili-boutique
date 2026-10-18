@@ -11,7 +11,9 @@ export default function Layout() {
   const close = () => setMenuOpen(false);
 
   // Close the mobile menu whenever the page changes, or on Escape
-  useEffect(close, [location.key]);
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.key]);
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (e) => e.key === 'Escape' && close();
