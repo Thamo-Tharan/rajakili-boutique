@@ -11,7 +11,7 @@ const COLOR_MAP = {
 
 function palette(colors = []) {
   const hex = colors.map((c) => COLOR_MAP[c.toLowerCase()]).filter(Boolean);
-  return [hex[0] || '#7a1f2b', hex[1] || '#c9a14a'];
+  return [hex[0] || '#1f2a44', hex[1] || '#d4961c'];
 }
 
 function Motif({ category, a, b }) {
@@ -80,7 +80,7 @@ export default function ProductImage({ product, className = '', width = 800, eag
   const [a, b] = palette(product.colors);
   const pid = `dots-${String(product._id || product.name).replace(/[^a-zA-Z0-9-]/g, '')}`;
   return (
-    <svg className={`product-img ${className}`} viewBox="0 0 200 210" role="img" aria-label={product.name}>
+    <svg className={`product-img ${className}`} viewBox="0 0 200 210" preserveAspectRatio="xMidYMid slice" role="img" aria-label={product.name}>
       <defs>
         <pattern id={pid} width="16" height="16" patternUnits="userSpaceOnUse">
           <circle cx="8" cy="8" r="1.4" fill={b} opacity="0.25" />
