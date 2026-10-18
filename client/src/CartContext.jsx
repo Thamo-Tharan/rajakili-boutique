@@ -14,6 +14,8 @@ function loadCart() {
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState(loadCart);
+  // Shows the 'Added to bag' pop-up
+  const [lastAdded, setLastAdded] = useState(null);
 
   useEffect(() => {
     try {
@@ -26,6 +28,7 @@ export function CartProvider({ children }) {
   const keyOf = (id, size) => `${id}__${size || ''}`;
 
   const addItem = (product, size, qty = 1) => {
+    setLastAdded({ name: product.name, image: product.image, category: product.category, colors: product.colors, size, at: Date.now() });
     setItems((prev) => {
       const key = keyOf(product._id, size);
       const existing = prev.find((i) => i.key === key);
@@ -59,7 +62,7 @@ export function CartProvider({ children }) {
   const total = items.reduce((s, i) => s + i.qty * i.price, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQty, clear, count, total }}>
+    <CartContext.Provider value={{ items, addItem, updateQty, clear, count, total, lastAdded, dismissAdded: () => setLastAdded(null) }}>
       {children}
     </CartContext.Provider>
   );

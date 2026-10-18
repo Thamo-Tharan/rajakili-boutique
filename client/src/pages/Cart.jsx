@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { MessageCircle, Minus, Plus, ShoppingBag, Trash2, Truck } from 'lucide-react';
 import { useCart } from '../CartContext.jsx';
 import ProductImage from '../components/ProductImage.jsx';
 import WhatsAppButton from '../components/WhatsAppButton.jsx';
@@ -10,6 +11,7 @@ export default function Cart() {
   if (items.length === 0)
     return (
       <section className="container section empty-state">
+        <span className="empty-icon"><ShoppingBag size={30} /></span>
         <h1 className="page-title">Your bag is empty</h1>
         <p className="muted">Find something you love in the collection.</p>
         <Link to="/shop" className="btn btn-primary">Start shopping</Link>
@@ -37,12 +39,12 @@ export default function Cart() {
                 <Link to={`/product/${i.id}`}><strong>{i.name}</strong></Link>
                 {i.size && <span className="muted">Size: {i.size}</span>}
                 <span>{formatPrice(i.price)} {i.qty > 1 && <span className="muted">× {i.qty} = {formatPrice(i.price * i.qty)}</span>}</span>
-                <button className="btn btn-link remove-btn" onClick={() => updateQty(i.key, 0)}>Remove</button>
+                <button className="btn btn-link remove-btn" onClick={() => updateQty(i.key, 0)}><Trash2 size={14} /> Remove</button>
               </div>
               <div className="qty">
-                <button onClick={() => updateQty(i.key, i.qty - 1)} disabled={i.qty <= 1} aria-label="Decrease">−</button>
+                <button onClick={() => updateQty(i.key, i.qty - 1)} disabled={i.qty <= 1} aria-label="Decrease"><Minus size={15} /></button>
                 <span>{i.qty}</span>
-                <button onClick={() => updateQty(i.key, i.qty + 1)} aria-label="Increase">+</button>
+                <button onClick={() => updateQty(i.key, i.qty + 1)} aria-label="Increase"><Plus size={15} /></button>
               </div>
             </li>
           ))}
@@ -53,10 +55,14 @@ export default function Cart() {
             <span>Subtotal</span>
             <strong>{formatPrice(total)}</strong>
           </div>
-          <p className="muted small">Delivery charges are confirmed on WhatsApp.</p>
-          <WhatsAppButton className="btn btn-whatsapp full" message={cartMessage(items)}>
-            Order bag on WhatsApp
+          <div className="summary-row muted-row">
+            <span>Delivery</span>
+            <span>Confirmed on WhatsApp</span>
+          </div>
+          <WhatsAppButton className="btn btn-whatsapp full btn-lg" message={cartMessage(items)}>
+            <MessageCircle size={19} /> Order bag on WhatsApp
           </WhatsAppButton>
+          <p className="summary-note"><Truck size={16} /> Delivery across India in 4 to 7 days</p>
           <button className="btn btn-link" onClick={confirmClear}>Clear bag</button>
         </aside>
       </div>
