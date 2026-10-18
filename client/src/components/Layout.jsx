@@ -25,7 +25,7 @@ export function Logo({ light = false }) {
 }
 
 export default function Layout() {
-  const { count } = useCart();
+  const { count, pieces } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,11 +52,11 @@ export default function Layout() {
 
   // Little bounce on the bag when something is added
   useEffect(() => {
-    if (!count) return undefined;
+    if (!pieces) return undefined;
     setBump(true);
     const t = setTimeout(() => setBump(false), 450);
     return () => clearTimeout(t);
-  }, [count]);
+  }, [pieces]);
 
   const params = new URLSearchParams(location.search);
   const activeCat = location.pathname === '/shop' ? params.get('category') : null;
@@ -108,7 +108,7 @@ export default function Layout() {
             <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen((o) => !o)}>
               <Search size={20} />
             </button>
-            <Link to="/cart" className={`icon-btn bag-btn ${bump ? 'bump' : ''}`} aria-label={`Bag, ${count} items`}>
+            <Link to="/cart" className={`icon-btn bag-btn ${bump ? 'bump' : ''}`} aria-label={`Bag, ${count} ${count === 1 ? 'item' : 'items'}`}>
               <ShoppingBag size={20} />
               {count > 0 && <span className="bag-count">{count}</span>}
             </Link>

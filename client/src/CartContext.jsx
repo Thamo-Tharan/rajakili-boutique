@@ -86,11 +86,13 @@ export function CartProvider({ children }) {
       next.splice(Math.min(index, next.length), 0, item);
       return next;
     });
-  const count = items.reduce((s, i) => s + i.qty, 0);
+  // count = different products in the bag; pieces = total quantity
+  const count = items.length;
+  const pieces = items.reduce((s, i) => s + i.qty, 0);
   const total = items.reduce((s, i) => s + i.qty * i.price, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQty, clear, restoreItem, count, total, lastAdded, dismissAdded: () => setLastAdded(null) }}>
+    <CartContext.Provider value={{ items, addItem, updateQty, clear, restoreItem, count, pieces, total, lastAdded, dismissAdded: () => setLastAdded(null) }}>
       {children}
     </CartContext.Provider>
   );

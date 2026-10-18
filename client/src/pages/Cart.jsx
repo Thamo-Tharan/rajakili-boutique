@@ -7,7 +7,9 @@ import WhatsAppButton from '../components/WhatsAppButton.jsx';
 import { cartMessage, formatPrice } from '../utils.js';
 
 export default function Cart() {
-  const { items, count, updateQty, clear, total, restoreItem } = useCart();
+  const { items, count, pieces, updateQty, clear, total, restoreItem } = useCart();
+  // e.g. "1 item" or "1 item · 2 pieces"
+  const summary = `${count} ${count === 1 ? 'item' : 'items'}${pieces !== count ? ` · ${pieces} pieces` : ''}`;
   const [removed, setRemoved] = useState(null);
 
   const removeItem = (item) => {
@@ -53,7 +55,7 @@ export default function Cart() {
   return (
     <section className="container section">
       <div className="section-head">
-        <h1 className="page-title">Your bag <span className="muted count-label">({count} {count === 1 ? 'item' : 'items'})</span></h1>
+        <h1 className="page-title">Your bag <span className="muted count-label">({summary})</span></h1>
         <Link to="/shop" className="link-more back-link"><ArrowLeft size={16} /> Keep shopping</Link>
       </div>
 
@@ -119,7 +121,7 @@ export default function Cart() {
       <div className="sticky-buy cart-sticky">
         <div>
           <strong>{formatPrice(total)}</strong>
-          <span>{count} {count === 1 ? 'item' : 'items'}</span>
+          <span>{summary}</span>
         </div>
         <WhatsAppButton className="btn btn-whatsapp sticky-order" message={cartMessage(items)}>
           <MessageCircle size={19} /> Order on WhatsApp
