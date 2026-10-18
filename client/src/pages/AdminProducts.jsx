@@ -156,7 +156,7 @@ export default function AdminProducts() {
           <tbody>
             {products.map((p) => (
               <tr key={p._id}>
-                <td><ProductImage product={p} className="table-thumb" /></td>
+                <td><ProductImage product={p} className="table-thumb" width={120} /></td>
                 <td>{p.name}</td>
                 <td>{p.category}</td>
                 <td>{formatPrice(p.price)}</td>

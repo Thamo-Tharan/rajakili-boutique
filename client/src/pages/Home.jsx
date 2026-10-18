@@ -5,11 +5,15 @@ import { getProducts } from '../api.js';
 import ProductCard from '../components/ProductCard.jsx';
 import ProductImage from '../components/ProductImage.jsx';
 
+const img = (id, w = 600) => `https://images.unsplash.com/${id}?w=${w}&q=75&auto=format&fit=crop`;
+
+// Free Unsplash photos for the home page
+const HERO_IMAGE = img('photo-1617627143750-d86bc21e42bb', 900);
 const CATEGORY_PREVIEW = {
-  Sarees: { colors: ['Maroon', 'Gold'], blurb: 'Silk, soft silk & cotton' },
-  Kurtis: { colors: ['Rose Pink', 'Gold'], blurb: 'Daily, office & festive' },
-  Lehengas: { colors: ['Red', 'Gold'], blurb: 'Bridal & kids' },
-  Jewellery: { colors: ['Antique Gold', 'Maroon'], blurb: 'Temple & oxidised' },
+  Sarees: { colors: ['Maroon', 'Gold'], blurb: 'Kanchipuram, soft silk and more', image: img('photo-1641699862936-be9f49b1c38d') },
+  Kurtis: { colors: ['Rose Pink', 'Gold'], blurb: 'Daily, office and festive', image: img('photo-1741847639057-b51a25d42892') },
+  Lehengas: { colors: ['Red', 'Gold'], blurb: 'Bridal and festive', image: img('photo-1724856605022-106d6dd6e842') },
+  Jewellery: { colors: ['Antique Gold', 'Maroon'], blurb: 'Temple sets and jhumkas', image: img('photo-1758995115518-26f90aa61b97') },
 };
 
 export default function Home() {
@@ -41,7 +45,11 @@ export default function Home() {
           </div>
           <Link to="/shop?category=Sarees" className="hero-art" aria-label="Shop silk sarees">
             <div className="hero-frame">
-              <ProductImage product={{ _id: 'hero', name: 'Silk saree', category: 'Sarees', colors: ['Maroon', 'Gold'] }} />
+              <ProductImage
+                eager
+                width={900}
+                product={{ _id: 'hero', name: 'Woman in a pink silk saree with gold jewellery', category: 'Sarees', colors: ['Maroon', 'Gold'], image: HERO_IMAGE }}
+              />
               <span className="hero-tag">Silk sarees →</span>
             </div>
           </Link>
@@ -55,7 +63,10 @@ export default function Home() {
         <div className="category-grid">
           {config.categories.map((c) => (
             <Link key={c} to={`/shop?category=${c}`} className="category-card">
-              <ProductImage product={{ _id: `cat-${c}`, name: c, category: c, colors: CATEGORY_PREVIEW[c].colors }} />
+              <ProductImage
+                width={600}
+                product={{ _id: `cat-${c}`, name: c, category: c, colors: CATEGORY_PREVIEW[c].colors, image: CATEGORY_PREVIEW[c].image }}
+              />
               <div>
                 <h3>{c}</h3>
                 <span>{CATEGORY_PREVIEW[c].blurb}</span>

@@ -1,10 +1,12 @@
-// Shows the product photo if there is one. Otherwise draws an elegant
+import { useState } from 'react';
+
+// Shows the product photo if there is one (falls back to the drawing if it fails to load). Otherwise draws an elegant
 // illustrated placeholder in the product's colours, so the demo never looks empty.
 const COLOR_MAP = {
   maroon: '#7a1f2b', gold: '#c9a14a', mustard: '#d4a017', black: '#2b2b2b',
   'peacock blue': '#0f6e7a', pink: '#d96a8f', 'rose pink': '#e48aa4', indigo: '#3b4a8a',
   'mint green': '#7fbfa4', red: '#b3202e', green: '#2f7d4f', 'antique gold': '#b08d3c',
-  silver: '#9aa0a6',
+  silver: '#9aa0a6', blue: '#2f5fa8', yellow: '#e2b423', purple: '#6b3a8c',
 };
 
 function palette(colors = []) {
@@ -57,9 +59,23 @@ function Motif({ category, a, b }) {
   }
 }
 
-export default function ProductImage({ product, className = '' }) {
-  if (product.image) {
-    return <img className={`product-img ${className}`} src={product.image} alt={product.name} loading="lazy" />;
+// Smaller photo for thumbnails (bag, admin table) so pages load fast
+function sized(url, width) {
+  return url.includes('images.unsplash.com') ? url.replace(/w=\d+/, `w=${width}`) : url;
+}
+
+export default function ProductImage({ product, className = '', width = 800, eager = false }) {
+  const [failed, setFailed] = useState(false);
+  if (product.image && !failed) {
+    return (
+      <img
+        className={`product-img is-photo ${className}`}
+        src={sized(product.image, width)}
+        alt={product.name}
+        loading={eager ? 'eager' : 'lazy'}
+        onError={() => setFailed(true)}
+      />
+    );
   }
   const [a, b] = palette(product.colors);
   const pid = `dots-${String(product._id || product.name).replace(/[^a-zA-Z0-9-]/g, '')}`;

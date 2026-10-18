@@ -7,7 +7,7 @@ export default function ProductCard({ product }) {
   return (
     <Link to={`/product/${product._id}`} className="product-card">
       <div className="product-media">
-        <ProductImage product={product} />
+        <ProductImage product={product} width={600} />
         {product.isNew && <span className="badge">New</span>}
         {product.stock === 0 && <span className="badge badge-out">Sold out</span>}
       </div>

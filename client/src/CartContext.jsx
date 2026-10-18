@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const CartContext = createContext(null);
-const KEY = 'rajakili-cart';
+const KEY = 'rajakili-cart-v2';
 
 function loadCart() {
   try {

@@ -94,6 +94,8 @@ export default function Layout() {
         </div>
         <div className="container footer-note">
           Demo website by Thamu · Full-stack MERN developer · Want one for your boutique? Get in touch.
+          {' '}· Photos from{' '}
+          <a className="photo-credit" href="https://unsplash.com" target="_blank" rel="noreferrer">Unsplash</a>
         </div>
       </footer>
     </>
