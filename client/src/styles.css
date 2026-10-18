@@ -155,7 +155,7 @@ h4 { margin: 0; }
 }
 .hero-inner {
   position: relative; display: grid; grid-template-columns: 1.02fr .98fr; gap: 48px; align-items: center;
-  padding-top: 72px; padding-bottom: 150px;
+  padding-top: 72px; padding-bottom: 80px;
 }
 .hero h1 { font-size: clamp(42px, 5.6vw, 76px); color: var(--navy); max-width: 11.5em; margin-bottom: 22px; }
 .hero-lead { font-size: 18px; color: var(--muted); max-width: 33em; margin: 0 0 32px; }
@@ -474,7 +474,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
   .menu-backdrop { display: block; position: fixed; inset: 0; z-index: 25; background: rgba(18, 26, 48, .35); }
   .announce-notes { display: none; }
   .announce-inner { justify-content: center; }
-  .hero-inner { grid-template-columns: 1fr; padding-top: 40px; padding-bottom: 110px; gap: 36px; }
+  .hero-inner { grid-template-columns: 1fr; padding-top: 40px; padding-bottom: 56px; gap: 36px; }
   .hero-collage { height: 440px; max-width: 520px; width: 100%; margin: 0 auto; order: -1; }
   .hero-inner { padding-top: 24px; }
   .category-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }

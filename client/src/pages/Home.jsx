@@ -57,7 +57,6 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <div className="hero-word" aria-hidden="true">ராஜகிளி</div>
         <div className="container hero-inner">
           <div className="hero-text">
             <h1>Silks and stories, draped for every celebration</h1>
