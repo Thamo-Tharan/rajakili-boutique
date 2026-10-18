@@ -179,7 +179,7 @@ h4 { margin: 0; }
 .collage-main .product-img, .collage-side .product-img { width: 100%; height: 100%; aspect-ratio: auto; }
 .collage-tag {
   position: absolute; left: 10px; bottom: 10px; background: rgba(255, 255, 255, .94); color: var(--navy);
-  font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; white-space: nowrap;
 }
 .collage-main, .collage-side { animation: rise .9s var(--ease) both; }
 .collage-side-1 { animation-delay: .15s; }
@@ -515,6 +515,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
   .hero-lead { font-size: 16.5px; }
   .hero-actions .btn { flex: 1 1 100%; }
   .hero-collage { height: 360px; }
+  .collage-tag { font-size: 11px; padding: 4px 9px; left: 6px; bottom: 6px; }
   .promise-row { gap: 8px; margin-top: 26px; }
   .promise-row li { font-size: 13.5px; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px 4px 4px; }
   .promise-icon { width: 26px; height: 26px; }
