@@ -4,14 +4,14 @@ const img = (id) => `https://images.unsplash.com/${id}?w=800&q=75&auto=format&fi
 
 const products = [
   {
-    name: 'Kanchipuram Silk Saree – Temple Border',
+    name: 'Kanchipuram Silk Saree – Violet & Gold',
     category: 'Sarees',
     price: 12499,
     mrp: 14999,
     description:
       'Pure silk saree with a traditional temple border and rich zari pallu. Comes with an unstitched blouse piece.',
     sizes: ['Free Size'],
-    colors: ['Maroon', 'Gold'],
+    colors: ['Violet', 'Gold'],
     image: img('photo-1610030469983-98e550d6193c'),
     stock: 4,
     isNew: true,

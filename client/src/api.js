@@ -4,7 +4,7 @@
 import config from './config.js';
 import seedProducts from './data/seedProducts.js';
 
-const DEMO_KEY = 'rajakili-demo-products-v3'; // bump when demo data changes
+const DEMO_KEY = 'rajakili-demo-products-v4'; // bump when demo data changes
 const TOKEN_KEY = 'rajakili-admin-token';
 
 export const isDemoMode = !config.apiUrl;

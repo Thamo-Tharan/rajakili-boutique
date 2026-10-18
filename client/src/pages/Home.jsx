@@ -25,7 +25,7 @@ const CATEGORIES = {
 
 const LOOKBOOK = [
   { id: 'photo-1688382654723-a7366006519b', alt: 'Green silk saree with gold jewellery', to: '/shop?category=Sarees', caption: 'Green and gold for temple visits' },
-  { id: 'photo-1610030469983-98e550d6193c', alt: 'Red and brown silk saree', to: '/shop?category=Sarees', caption: 'Classic Kanchipuram red' },
+  { id: 'photo-1610030469983-98e550d6193c', alt: 'Violet and gold Kanchipuram silk saree', to: '/shop?category=Sarees', caption: 'Rich violet Kanchipuram' },
   { id: 'photo-1767955694884-d4bf352c23c2', alt: 'Yellow and maroon festive lehenga', to: '/shop?category=Lehengas', caption: 'Haldi-ready yellow' },
   { id: 'photo-1770838446917-cf324f1be078', alt: 'Green saree with an ornate gold necklace', to: '/shop?category=Jewellery', caption: 'Layer the temple necklace' },
   { id: 'photo-1610189012906-4c0aa9b9781e', alt: 'Blue and yellow Kota silk saree', to: '/shop?category=Sarees', caption: 'Light Kota for day functions' },
