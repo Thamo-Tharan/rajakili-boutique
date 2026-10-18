@@ -12,22 +12,21 @@ const img = (id, w = 700) => `https://images.unsplash.com/${id}?w=${w}&q=75&auto
 const photo = (id, name, w) => ({ _id: id, name, category: 'Sarees', colors: ['Maroon', 'Gold'], image: img(id, w) });
 
 const HERO_MAIN = photo('photo-1617627143750-d86bc21e42bb', 'Woman in a pink silk saree with gold jewellery', 900);
-const HERO_SIDE_1 = photo('photo-1758995115518-26f90aa61b97', 'Gold temple necklace on blue velvet', 500);
-const HERO_SIDE_2 = photo('photo-1724856605022-106d6dd6e842', 'Close-up of red and gold zari work', 500);
+const HERO_SIDE_1 = photo('photo-1652374968229-a66a1c170c04', 'Bride in a maroon and gold lehenga', 500);
+const HERO_SIDE_2 = photo('photo-1740431377901-c2f28d50c759', 'Bride wearing layered temple jewellery', 500);
 const WEDDING = photo('photo-1733937108021-d5db469f2216', 'Bride in a yellow and red bridal outfit', 1000);
 
 const CATEGORIES = {
   Sarees: { blurb: 'Kanchipuram, soft silk, Kota', image: 'photo-1641699862936-be9f49b1c38d' },
   Kurtis: { blurb: 'Daily, office and festive', image: 'photo-1741847639057-b51a25d42892' },
   Lehengas: { blurb: 'Bridal and festive', image: 'photo-1759906760638-eeffcb471e53' },
-  Jewellery: { blurb: 'Temple sets and earrings', image: 'photo-1758995115857-2de1eb6283d0' },
+  Jewellery: { blurb: 'Temple sets and earrings', image: 'photo-1751606615009-30f61ff1a510' },
 };
 
 const LOOKBOOK = [
   { id: 'photo-1688382654723-a7366006519b', alt: 'Green silk saree with gold jewellery', to: '/shop?category=Sarees', caption: 'Green and gold for temple visits' },
   { id: 'photo-1610030469983-98e550d6193c', alt: 'Violet and gold Kanchipuram silk saree', to: '/shop?category=Sarees', caption: 'Rich violet Kanchipuram' },
   { id: 'photo-1767955694884-d4bf352c23c2', alt: 'Yellow and maroon festive lehenga', to: '/shop?category=Lehengas', caption: 'Haldi-ready yellow' },
-  { id: 'photo-1770838446917-cf324f1be078', alt: 'Green saree with an ornate gold necklace', to: '/shop?category=Jewellery', caption: 'Layer the temple necklace' },
   { id: 'photo-1610189012906-4c0aa9b9781e', alt: 'Blue and yellow Kota silk saree', to: '/shop?category=Sarees', caption: 'Light Kota for day functions' },
 ];
 
@@ -50,7 +49,12 @@ export default function Home() {
     getProducts().then(setProducts).catch(() => setProducts([]));
   }, []);
 
-  const newArrivals = products.filter((p) => p.isNew).slice(0, 4);
+  // Lead with the most eye-catching categories
+  const ORDER = { Sarees: 0, Lehengas: 1, Kurtis: 2, Jewellery: 3 };
+  const newArrivals = products
+    .filter((p) => p.isNew)
+    .sort((a, b) => (ORDER[a.category] ?? 9) - (ORDER[b.category] ?? 9))
+    .slice(0, 4);
   const sarees = products.filter((p) => p.category === 'Sarees').slice(0, 4);
   const countIn = (c) => products.filter((p) => p.category === c).length;
 
@@ -83,13 +87,13 @@ export default function Home() {
             <Link to="/shop?category=Sarees" className="collage-main" aria-label="Shop silk sarees">
               <ProductImage product={HERO_MAIN} width={900} eager />
             </Link>
-            <Link to="/shop?category=Jewellery" className="collage-side collage-side-1" aria-label="Shop temple jewellery">
+            <Link to="/shop?category=Lehengas" className="collage-side collage-side-1" aria-label="Shop bridal lehengas">
               <ProductImage product={HERO_SIDE_1} width={500} eager />
-              <span className="collage-tag">Temple jewellery</span>
+              <span className="collage-tag">Bridal lehengas</span>
             </Link>
-            <Link to="/shop?category=Lehengas" className="collage-side collage-side-2" aria-label="Shop bridal lehengas">
+            <Link to="/shop?category=Jewellery" className="collage-side collage-side-2" aria-label="Shop temple jewellery">
               <ProductImage product={HERO_SIDE_2} width={500} eager />
-              <span className="collage-tag">Zari lehengas</span>
+              <span className="collage-tag">Temple jewellery</span>
             </Link>
           </div>
         </div>
